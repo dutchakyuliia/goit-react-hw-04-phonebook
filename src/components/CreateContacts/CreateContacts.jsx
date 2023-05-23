@@ -32,8 +32,8 @@ export const CreateContacts = ({contacts, saveContact}) =>{
   };
 
     return (
-      <div>
-        <form onSubmit={handleSubmit} className="form">
+      <div >
+        <form onSubmit={handleSubmit} >
           <h3>Name</h3>
           <input
             value={name}

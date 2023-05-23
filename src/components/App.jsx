@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CreateContacts } from './CreateContacts/CreateContacts';
 import { ListContacts } from './ListContacts/ListContacts';
 import { Search } from './Search/Search';
-
+import css from "./App.module.css"
 export const App = () => {
   const [contacts, setContacts] = useState(() => {
     const storageContacts = JSON.parse(localStorage.getItem('contacts'));
@@ -38,7 +38,7 @@ export const App = () => {
     setContacts(contacts.filter(contact => contact.id !== id));
   };
   return (
-    <div>
+    <div className={css.wrapper}>
       <h2>Phonebook</h2>
       <CreateContacts
         saveContact={saveContact}
