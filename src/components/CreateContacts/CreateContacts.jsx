@@ -1,29 +1,24 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
-export class CreateContacts extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
-  handleChange = evt => {
-    this.setState({ name: evt.target.value });
-  };
-  handleNumber = evt => {
-    this.setState({ number: evt.target.value });
-  };
+export const CreateContacts = ({contacts, saveContact}) =>{
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
 
-
-  handleSubmit = e => {
+  const handleChange = ({target: {value, name}}) => {
+    if (name === "name") setName(value)
+    else if (name === "number")setNumber(value)
+  };
+  
+  const handleSubmit = e => {
     const newContact = {
-      name: this.state.name,
-      number: this.state.number,
+      name,
+      number,
       id: nanoid()
     };
-    if (!this.props.contacts.some(contact => contact.name.toLowerCase() === this.state.name.toLowerCase())) {
-      this.props.saveContact(newContact);
-     
-      this.reset()
+    if (!contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+      saveContact(newContact);
+      reset()
     } else {
       alert('Name is already in contacts');
     }
@@ -32,16 +27,17 @@ export class CreateContacts extends Component {
   };
 
 
-  reset = () => {this.setState({name: '', number: ''}) };
+  const reset = () => {
+    setName(""); setNumber("")
+  };
 
-  render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit} className="form">
           <h3>Name</h3>
           <input
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={name}
+            onChange={handleChange}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -50,8 +46,8 @@ export class CreateContacts extends Component {
           />
           <h3>Number</h3>
           <input
-            value={this.state.number}
-            onChange={this.handleNumber}
+            value={number}
+            onChange={handleChange}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -63,7 +59,7 @@ export class CreateContacts extends Component {
       </div>
     );
   }
-}
+
 CreateContacts.propTypes = {
   saveContact: PropTypes.string.isRequired,
   contacts: PropTypes.arrayOf(

@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-export class ListContactsItem extends Component {
-  render() {
+export const ListContactsItem = ({contact, onDelete}) => {
     return (
-      <li>{this.props.contact.name}  {this.props.contact.number}
+      <li>{contact.name}  {contact.number}
         <button onClick={() => {
-          this.props.onDelete(this.props.contact.id)
+          onDelete(contact.id)
         }} >Delete</button></li>
        
     );
   }
-}
 ListContactsItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   contact: PropTypes.shape({
